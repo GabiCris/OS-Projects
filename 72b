@@ -1,0 +1,28 @@
+times=`expr $# / 2`
+#parameters validation
+if [ `expr $# % 2` -eq 0 ]
+then
+	#go through all pairs with a for loop
+	for i in $(seq $times); do
+		if [ -f $1 ]
+		then
+			#get the dimension of file with `du` command and then separate the size
+			#with sed
+			no=`du $1 | sed 's/\s.*$//'`
+			#check if it verifies condition
+			if [ $no == $2 ]
+			then
+				#if yes, print answer
+				echo File $1 size equals $2
+			else
+				echo FIle $1 size does not equal $2. Actual size: $no
+			fi
+		else
+			echo $1 not a file.
+		fi
+		#go to next pair
+		shift 2
+	done
+else
+	echo Incorrect no. of parameters!
+fi

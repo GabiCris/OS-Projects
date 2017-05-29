@@ -1,0 +1,23 @@
+times=`expr $# / 2`
+#times represents the no. of pairs file-number  to be parsed
+if [ `expr $# % 2` -eq 0 ]
+#if to verify number of params
+then
+	#for to parse pairs
+	for i in $(seq $times); do
+		#check if file
+		if [ -f $1 ]
+		then
+			#get the word and then print solution
+			word=`cat $1 | tr " " "\n" | grep -v '^$' | head -n +$2 | tail -1` 
+			echo $1, $2-th word is: $word
+		
+		else
+			echo $1 not a file.
+		fi
+		#go to the next pair
+		shift 2
+	done
+else
+	echo Incorrect no. of parameters!
+fi
